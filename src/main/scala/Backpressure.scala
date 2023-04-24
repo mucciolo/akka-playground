@@ -1,14 +1,14 @@
 package com.mucciolo
 
-import akka.*
-import akka.actor.typed.*
-import akka.actor.typed.scaladsl.*
-import akka.stream.scaladsl.*
+import akka._
+import akka.actor.typed._
+import akka.actor.typed.scaladsl._
+import akka.stream.scaladsl._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
-object Backpressure {
+object Backpressure extends App {
 
   private implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "Backpressure")
   private implicit val ec: ExecutionContext = system.executionContext
@@ -37,8 +37,6 @@ object Backpressure {
     println(x)
   }
 
-  @main def main(): Unit = {
-    fastSource.runWith(slowSink).onComplete(_ => system.terminate())
-  }
+  fastSource.runWith(slowSink).onComplete(_ => system.terminate())
 
 }

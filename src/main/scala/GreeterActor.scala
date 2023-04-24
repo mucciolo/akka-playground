@@ -1,9 +1,9 @@
 package com.mucciolo
 
-import GreeterActor.*
+import GreeterActor._
 import GreetingsCoordinator.SayHello
 
-import akka.actor.typed.scaladsl.{Behaviors, LoggerOps}
+import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 
 object GreeterActor {
@@ -30,11 +30,13 @@ object GreetingsCounter {
       val n = greetingCounter + 1
       ctx.log.info(s"Greeting $n for ${msg.whom}")
 
-      if n == max then
+      if (n == max)
         Behaviors.stopped
-      else
+      else {
         msg.from ! Greet(msg.whom, ctx.self)
         counter(n, max)
+      }
+
     }
 }
 
@@ -54,7 +56,7 @@ object GreetingsCoordinator {
     }
 }
 
-@main def greeterActor(): Unit = {
+object GreeterActorApp extends App {
   val system: ActorSystem[SayHello] = ActorSystem(GreetingsCoordinator(), "coordinator")
 
   system ! SayHello("World")
@@ -62,3 +64,4 @@ object GreetingsCoordinator {
 
   system.terminate()
 }
+

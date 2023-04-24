@@ -1,13 +1,13 @@
 package com.mucciolo
 
-import akka.actor.typed.*
-import akka.actor.typed.scaladsl.*
+import akka.actor.typed._
+import akka.actor.typed.scaladsl._
 import akka.stream.ClosedShape
-import akka.stream.scaladsl.*
+import akka.stream.scaladsl._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object TransactionAnalyzer {
+object TransactionAnalyzer extends App {
 
   private implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "Backpressure")
   private implicit val ec: ExecutionContext = system.executionContext
@@ -73,12 +73,10 @@ object TransactionAnalyzer {
         ClosedShape
   }
 
-  @main def run(): Unit = {
-    RunnableGraph.fromGraph(amlGraph)
-      .run()
-      .foreach(finalCount => println(s"TOTAL warnings: $finalCount"))
+  RunnableGraph.fromGraph(amlGraph)
+    .run()
+    .foreach(finalCount => println(s"TOTAL warnings: $finalCount"))
 
-    system.terminate()
-  }
+  system.terminate()
 
 }

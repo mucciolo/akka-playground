@@ -1,12 +1,11 @@
 package com.mucciolo
 
-import akka.{Done, NotUsed}
-import akka.actor.typed.*
+import akka.actor.typed._
 import akka.actor.typed.scaladsl.Behaviors
-import akka.stream.stage.*
-import akka.stream.*
-import akka.stream.scaladsl.*
-import akka.stream.typed.*
+import akka.stream._
+import akka.stream.scaladsl._
+import akka.stream.stage._
+import akka.{Done, NotUsed}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
@@ -39,8 +38,7 @@ object RunningAverage extends GraphStage[FlowShape[Int, Double]] {
     }
 }
 
-@main def runningAverageStream(): Unit = {
-
+object RunningAverageApp extends App {
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "example")
   implicit val ec: ExecutionContextExecutor = system.executionContext
 
@@ -49,5 +47,5 @@ object RunningAverage extends GraphStage[FlowShape[Int, Double]] {
   val pipeline: Future[Done] = source.via(RunningAverage).runWith(sink)
 
   pipeline.onComplete(_ => system.terminate())
-
 }
+

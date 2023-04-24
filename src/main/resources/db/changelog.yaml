@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - preConditions:
+      onFail: HALT
+      onError: HALT
+
+  - include:
+      file: create-table-points.sql
+      relativeToChangelogFile: true

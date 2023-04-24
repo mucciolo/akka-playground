@@ -1,12 +1,10 @@
 package com.mucciolo
 
-import akka.actor.typed.scaladsl.*
-import akka.actor.testkit.typed.scaladsl.*
 import akka.actor.typed.ActorSystem
-import akka.stream.*
-import akka.stream.scaladsl.*
+import akka.actor.typed.scaladsl._
+import akka.stream.scaladsl._
 import akka.stream.testkit.scaladsl.TestSink
-import org.scalatest.*
+import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
